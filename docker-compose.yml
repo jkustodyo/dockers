@@ -1,0 +1,38 @@
+version: '3'
+services:
+  pje-sistcadpj93:
+    build: .
+    image: tjrj/pentaho_server:93
+    container_name: pje-sistcadpj93
+    networks:
+      - rede_pentaho93
+    restart: always
+    ports:
+      - "8084:8080"
+
+
+#    user: pentaho
+
+
+    volumes:
+      - ./data4/hsqldb:/opt/pentaho93/pentaho-server/data/hsqldb:rw #Schedule/Quartz/hibernate
+      - ./data4/jackrabbit-repository:/opt/pentaho93/pentaho-server/pentaho-solutions/system/jackrabbit/repository:rw #login, bancos, JOB, TR
+      - ./data4/logs:/opt/pentaho93/pentaho-server/tomcat/logs
+
+#      - ./user1lock/ps93/tmp:/tmp
+
+
+#      - /home/user1lock/ps93/data/hsqldb:/opt/pentaho93/pentaho-server/data/hsqldb:rw #Schedule/Quartz/hibernate
+#      - /home/user1lock/ps93/data/jackrabbit-repository:/opt/pentaho93/pentaho-server/pentaho-solutions/system/jackrabbit/repository:rw #login, bancos, JOB, TR
+#      - /home/user1lock/ps93/logs:/opt/pentaho93/pentaho-server/tomcat/logs:rw
+
+
+    environment:
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1 #windows only
+      - TZ=America/Sao_Paulo
+networks:
+  rede_pentaho93:
+    external:
+      name: network_pje93
+ 
+
